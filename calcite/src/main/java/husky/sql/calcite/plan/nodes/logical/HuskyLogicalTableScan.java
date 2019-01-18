@@ -72,11 +72,6 @@ public class HuskyLogicalTableScan extends TableScan implements HuskyLogicalRel 
         return builder.build();
     }
 
-    // @Override
-    // public void register(RelOptPlanner planner) {
-    //     planner.addRule(PushProjectIntoTableScanRule.INSTANCE);
-    // }
-
     @Override
     public RelOptCost computeSelfCost(RelOptPlanner planner, RelMetadataQuery mq) {
         // Multiply the cost by a factor that makes a scan more attractive if it
@@ -104,21 +99,16 @@ public class HuskyLogicalTableScan extends TableScan implements HuskyLogicalRel 
                 // with filter and project all fields
                 double selectivity = RelMdUtil.guessSelectivity(condition, false);
                 double newRowCnt = Math.max(rowCnt * selectivity, 1.0);
-                // System.out.println("--- cost with filter pushed down: " + planner.getCostFactory().makeCost(newRowCnt, newRowCnt, newRowCnt * estimateRowSize(getRowType())).toString() + ", Selectivity: " + selectivity + ", newRowCnt: " + newRowCnt);
+
                 return planner.getCostFactory().makeCost(newRowCnt, newRowCnt, newRowCnt * estimateRowSize(getRowType()));
-                // return super.computeSelfCost(planner, mq);
             } else {
                 // project all fields and no filter
-                // System.out.println("--- cost without filter pushed down: " + planner.getCostFactory().makeCost(rowCnt, rowCnt, rowCnt * estimateRowSize(getRowType())).toString());
                 return planner.getCostFactory().makeCost(rowCnt, rowCnt, rowCnt * estimateRowSize(getRowType()));
-                // return super.computeSelfCost(planner, mq);
             }
         }
     }
 
-    // @Override
     public HuskyLogicalTableScan copy(RelTraitSet traitSet, int[] selectedFields) {
-        // assert inputs.isEmpty();
         return new HuskyLogicalTableScan(getCluster(), getTraitSet(), getTable(), selectedFields);
     }
 

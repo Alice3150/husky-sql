@@ -40,12 +40,8 @@ public class PushProjectIntoTableScanRule extends RelOptRule {
         HuskyLogicalCalc calc = call.rel(0);
         HuskyLogicalTableScan scan = call.rel(1);
         int[] fields = RexProgramExtractor.extractRefInputFields(calc.getProgram());
-        // System.out.println("--- Extracted fields  (pushed into tablescan): " + Arrays.toString(fields));
-        // System.out.println("--- field count array: " + Arrays.toString(IntStream.range(0, (int)scan.getRowType().getFieldCount()).toArray()));
 
-        if(!Arrays.equals(IntStream.range(0, (int)scan.getRowType().getFieldCount()).toArray(), fields)) {
-            // System.out.println("--- Extracted fields  (pushed into tablescan): " + Arrays.toString(fields));
-            
+        if(!Arrays.equals(IntStream.range(0, (int)scan.getRowType().getFieldCount()).toArray(), fields)) {            
             HuskyLogicalTableScan newScan = scan.copy(scan.getTraitSet(), fields);
             if(scan.isFilterPushDown()) {
                 newScan.applyPredicateByCopy(scan.condition);
@@ -54,19 +50,13 @@ public class PushProjectIntoTableScanRule extends RelOptRule {
                 calc.getProgram(), newScan.getRowType(), 
                 calc.getCluster().getRexBuilder(), fields);
 
-            // System.out.println("--- New Calc fields: " + Arrays.toString(RexProgramExtractor.extractRefInputFields(newCalProgram)));
-
             if(newCalProgram.isTrivial()) {
                 // drop calc if the transformed program merely returns its input and doesn't exist filter
-                // System.out.println("--- push project: transform to TableScan");
                 call.transformTo(newScan);
             } else {
                 call.transformTo(calc.copy(calc.getTraitSet(), newScan, newCalProgram));
-                // System.out.println("--- push project: transform to Calc with condition " + newCalProgram.expandLocalRef(newCalProgram.getCondition()).toString());
             }
-        } else {
-            // System.out.println("Fields are not projected!");
-        }
+        } 
     }
 
     private int[] getProjectFields(List<RexNode> exps) {

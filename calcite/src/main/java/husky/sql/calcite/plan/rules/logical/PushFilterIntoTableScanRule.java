@@ -46,7 +46,6 @@ public class PushFilterIntoTableScanRule extends RelOptRule {
         }
 
         RexProgram program = calc.getProgram();
-        // RexNode condition = program.expandLocalRef(program.getCondition());
         List<RexNode> remainingConditions = RexProgramExtractor
                                             .extractConjunctiveConditions(program, call.builder().getRexBuilder());
         if(remainingConditions.isEmpty()) {
@@ -58,7 +57,7 @@ public class PushFilterIntoTableScanRule extends RelOptRule {
         RelBuilder relBuilder = call.builder();
         RexNode remainingCondition;
         if(!remainingConditions.isEmpty()) {
-            // relBuilder.push(scan);
+            relBuilder.push(scan);
             Optional<RexNode> resultCondition = remainingConditions.stream()
                                                     .reduce((l, r) -> relBuilder.and(l, r));
             if(resultCondition.isPresent()) {
@@ -70,19 +69,14 @@ public class PushFilterIntoTableScanRule extends RelOptRule {
             remainingCondition = null;
         }
 
-        // System.out.println("remainingCondition: " + remainingCondition.toString());
-        // System.out.println("Input fields of Calc: " + Arrays.toString(program.getInputRowType().getFieldNames().toArray()));        // check whether we still need a RexProgram. An RexProgram is needed when either
-        
+        // check whether we still need a RexProgram. An RexProgram is needed when either
         // projection or filter exists.
         HuskyLogicalTableScan newScan = scan.copy(scan.getTraitSet(), scan.fields);
         if(scan.fields.length == 0) {
         	// no projection in table scan; directly copy condition
-            // System.out.println("--- Used Fields with no projections in scan: " + Arrays.toString(RexProgramExtractor.extractRefInputFields(program)));
-            // newScan.applyPredicate(remainingCondition, RexProgramExtractor.extractRefInputFields(program));
             newScan.applyPredicateByCopy(remainingCondition);
         } else {
         	// projection has been pushed down; convert back to original index
-            // System.out.println("--- Used Fields with projections " + Arrays.toString(scan.fields) + " in scan: " + Arrays.toString(RexProgramExtractor.extractRefInputFields(program)));
             newScan.applyPredicate(remainingCondition, scan.fields);
         }
     
@@ -104,10 +98,8 @@ public class PushFilterIntoTableScanRule extends RelOptRule {
         }
 
         if(newCalProgram != null) {
-            // System.out.println("--- push filter: transform to Calc");
             call.transformTo(calc.copy(calc.getTraitSet(), newScan, newCalProgram));
         } else {
-            // System.out.println("--- push filter: transform to TableScan");
             call.transformTo(newScan);
         }
     }
