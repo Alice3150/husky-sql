@@ -46,7 +46,7 @@ public class HuskyQueryPlanner {
         info.setProperty("lex", "JAVA");
         CalciteConnection connection = DriverManager.getConnection("jdbc:calcite:", info)
                 .unwrap(CalciteConnection.class);
-        String schema = Resources.toString(SimpleQueryPlanner.class.getResource("/test_model.json"),
+        String schema = Resources.toString(SimpleQueryPlanner.class.getResource("/model.json"),
                 Charset.defaultCharset());
         // ModelHandler reads the schema and load the schema to connection's root schema and sets the default schema
         new ModelHandler(connection, "inline:" + schema);
@@ -60,7 +60,7 @@ public class HuskyQueryPlanner {
         System.out.println(RelOptUtil.toString(queryPlanner.getPhysicalPlan(root)));
     }
 
-    private HuskyQueryPlanner(SchemaPlus schema) {
+    public HuskyQueryPlanner(SchemaPlus schema) {
         config = Frameworks.newConfigBuilder()
                 // Lexical configuration defines how identifiers are quoted, whether they are converted to upper or lower
                 // case when they are read, and whether identifiers are matched case-sensitively.
@@ -131,7 +131,7 @@ public class HuskyQueryPlanner {
     }
 
 
-    private RelRoot getLogicalPlan(String query) throws ValidationException, RelConversionException {
+    public RelRoot getLogicalPlan(String query) throws ValidationException, RelConversionException {
         SqlNode sqlNode;
         Planner planner = Frameworks.getPlanner(config);
 
@@ -145,7 +145,7 @@ public class HuskyQueryPlanner {
         return planner.rel(validatedSqlNode);
     }
 
-    private RelNode getPhysicalPlan(RelRoot root) {
+    public RelNode getPhysicalPlan(RelRoot root) {
         RelNode originalPlan = root.rel;
         RelOptPlanner volcanoPlanner = root.rel.getCluster().getPlanner();
 
