@@ -1,0 +1,13 @@
+# Target labels
+ gflags
+# Source files and their labels
+/data/opt/tmp/1155107959/husky-sql/build/CMakeFiles/gflags
+/data/opt/tmp/1155107959/husky-sql/build/CMakeFiles/gflags.rule
+/data/opt/tmp/1155107959/husky-sql/build/CMakeFiles/gflags-complete.rule
+/data/opt/tmp/1155107959/husky-sql/build/third_party/src/gflags-stamp/gflags-install.rule
+/data/opt/tmp/1155107959/husky-sql/build/third_party/src/gflags-stamp/gflags-mkdir.rule
+/data/opt/tmp/1155107959/husky-sql/build/third_party/src/gflags-stamp/gflags-download.rule
+/data/opt/tmp/1155107959/husky-sql/build/third_party/src/gflags-stamp/gflags-update.rule
+/data/opt/tmp/1155107959/husky-sql/build/third_party/src/gflags-stamp/gflags-patch.rule
+/data/opt/tmp/1155107959/husky-sql/build/third_party/src/gflags-stamp/gflags-configure.rule
+/data/opt/tmp/1155107959/husky-sql/build/third_party/src/gflags-stamp/gflags-build.rule

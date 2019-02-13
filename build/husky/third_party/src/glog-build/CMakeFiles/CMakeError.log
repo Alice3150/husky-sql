@@ -1,0 +1,297 @@
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_aaa6c/fast"
+gmake[4]: Entering directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+/usr/bin/gmake -f CMakeFiles/cmTC_aaa6c.dir/build.make CMakeFiles/cmTC_aaa6c.dir/build
+gmake[5]: Entering directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_aaa6c.dir/CheckSymbolExists.c.o
+/data/opt/gcc-6.1.0-bottle/bin/gcc    -o CMakeFiles/cmTC_aaa6c.dir/CheckSymbolExists.c.o   -c /data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_aaa6c
+/data/opt/brew/Cellar/cmake/3.10.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_aaa6c.dir/link.txt --verbose=1
+/data/opt/gcc-6.1.0-bottle/bin/gcc      -rdynamic CMakeFiles/cmTC_aaa6c.dir/CheckSymbolExists.c.o  -o cmTC_aaa6c 
+CMakeFiles/cmTC_aaa6c.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+gmake[5]: *** [cmTC_aaa6c] Error 1
+gmake[5]: Leaving directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+gmake[4]: *** [cmTC_aaa6c/fast] Error 2
+gmake[4]: Leaving directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+
+File /data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_85ee9/fast"
+gmake[4]: Entering directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+/usr/bin/gmake -f CMakeFiles/cmTC_85ee9.dir/build.make CMakeFiles/cmTC_85ee9.dir/build
+gmake[5]: Entering directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_85ee9.dir/CheckFunctionExists.c.o
+/data/opt/gcc-6.1.0-bottle/bin/gcc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_85ee9.dir/CheckFunctionExists.c.o   -c /data/opt/brew/Cellar/cmake/3.10.1/share/cmake/Modules/CheckFunctionExists.c
+Linking C executable cmTC_85ee9
+/data/opt/brew/Cellar/cmake/3.10.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_85ee9.dir/link.txt --verbose=1
+/data/opt/gcc-6.1.0-bottle/bin/gcc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_85ee9.dir/CheckFunctionExists.c.o  -o cmTC_85ee9 -lpthreads 
+/data/opt/brew/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+gmake[5]: *** [cmTC_85ee9] Error 1
+gmake[5]: Leaving directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+gmake[4]: *** [cmTC_85ee9/fast] Error 2
+gmake[4]: Leaving directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+
+
+Determining size of unsigned __int16 failed with the following output:
+Change Dir: /data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_b83eb/fast"
+gmake[4]: Entering directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+/usr/bin/gmake -f CMakeFiles/cmTC_b83eb.dir/build.make CMakeFiles/cmTC_b83eb.dir/build
+gmake[5]: Entering directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_b83eb.dir/HAVE___UINT16.c.o
+/data/opt/gcc-6.1.0-bottle/bin/gcc    -o CMakeFiles/cmTC_b83eb.dir/HAVE___UINT16.c.o   -c /data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CheckTypeSize/HAVE___UINT16.c
+/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CheckTypeSize/HAVE___UINT16.c:23:31: error: expected ')' before '__int16'
+ #define SIZE (sizeof(unsigned __int16))
+                               ^
+/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CheckTypeSize/HAVE___UINT16.c:25:12: note: in expansion of macro 'SIZE'
+   ('0' + ((SIZE / 10000)%10)),
+            ^~~~
+/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CheckTypeSize/HAVE___UINT16.c:23:31: error: expected ')' before '__int16'
+ #define SIZE (sizeof(unsigned __int16))
+                               ^
+/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CheckTypeSize/HAVE___UINT16.c:26:12: note: in expansion of macro 'SIZE'
+   ('0' + ((SIZE / 1000)%10)),
+            ^~~~
+/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CheckTypeSize/HAVE___UINT16.c:23:31: error: expected ')' before '__int16'
+ #define SIZE (sizeof(unsigned __int16))
+                               ^
+/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CheckTypeSize/HAVE___UINT16.c:27:12: note: in expansion of macro 'SIZE'
+   ('0' + ((SIZE / 100)%10)),
+            ^~~~
+/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CheckTypeSize/HAVE___UINT16.c:23:31: error: expected ')' before '__int16'
+ #define SIZE (sizeof(unsigned __int16))
+                               ^
+/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CheckTypeSize/HAVE___UINT16.c:28:12: note: in expansion of macro 'SIZE'
+   ('0' + ((SIZE / 10)%10)),
+            ^~~~
+/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CheckTypeSize/HAVE___UINT16.c:23:31: error: expected ')' before '__int16'
+ #define SIZE (sizeof(unsigned __int16))
+                               ^
+/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CheckTypeSize/HAVE___UINT16.c:29:12: note: in expansion of macro 'SIZE'
+   ('0' +  (SIZE    % 10)),
+            ^~~~
+gmake[5]: *** [CMakeFiles/cmTC_b83eb.dir/HAVE___UINT16.c.o] Error 1
+gmake[5]: Leaving directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+gmake[4]: *** [cmTC_b83eb/fast] Error 2
+gmake[4]: Leaving directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+
+/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CheckTypeSize/HAVE___UINT16.c:
+#include <sys/types.h>
+#include <stdint.h>
+#include <stddef.h>
+
+
+#undef KEY
+#if defined(__i386)
+# define KEY '_','_','i','3','8','6'
+#elif defined(__x86_64)
+# define KEY '_','_','x','8','6','_','6','4'
+#elif defined(__ppc__)
+# define KEY '_','_','p','p','c','_','_'
+#elif defined(__ppc64__)
+# define KEY '_','_','p','p','c','6','4','_','_'
+#elif defined(__aarch64__)
+# define KEY '_','_','a','a','r','c','h','6','4','_','_'
+#elif defined(__ARM_ARCH_7A__)
+# define KEY '_','_','A','R','M','_','A','R','C','H','_','7','A','_','_'
+#elif defined(__ARM_ARCH_7S__)
+# define KEY '_','_','A','R','M','_','A','R','C','H','_','7','S','_','_'
+#endif
+
+#define SIZE (sizeof(unsigned __int16))
+char info_size[] =  {'I', 'N', 'F', 'O', ':', 's','i','z','e','[',
+  ('0' + ((SIZE / 10000)%10)),
+  ('0' + ((SIZE / 1000)%10)),
+  ('0' + ((SIZE / 100)%10)),
+  ('0' + ((SIZE / 10)%10)),
+  ('0' +  (SIZE    % 10)),
+  ']',
+#ifdef KEY
+  ' ','k','e','y','[', KEY, ']',
+#endif
+  '\0'};
+
+#ifdef __CLASSIC_C__
+int main(argc, argv) int argc; char *argv[];
+#else
+int main(int argc, char *argv[])
+#endif
+{
+  int require = 0;
+  require += info_size[argc];
+  (void)argv;
+  return require;
+}
+
+
+Determining if the function dladdr exists failed with the following output:
+Change Dir: /data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_6cb3f/fast"
+gmake[4]: Entering directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+/usr/bin/gmake -f CMakeFiles/cmTC_6cb3f.dir/build.make CMakeFiles/cmTC_6cb3f.dir/build
+gmake[5]: Entering directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_6cb3f.dir/CheckFunctionExists.c.o
+/data/opt/gcc-6.1.0-bottle/bin/gcc   -DCHECK_FUNCTION_EXISTS=dladdr   -o CMakeFiles/cmTC_6cb3f.dir/CheckFunctionExists.c.o   -c /data/opt/brew/Cellar/cmake/3.10.1/share/cmake/Modules/CheckFunctionExists.c
+Linking C executable cmTC_6cb3f
+/data/opt/brew/Cellar/cmake/3.10.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6cb3f.dir/link.txt --verbose=1
+/data/opt/gcc-6.1.0-bottle/bin/gcc  -DCHECK_FUNCTION_EXISTS=dladdr    -rdynamic CMakeFiles/cmTC_6cb3f.dir/CheckFunctionExists.c.o  -o cmTC_6cb3f 
+CMakeFiles/cmTC_6cb3f.dir/CheckFunctionExists.c.o: In function `main':
+CheckFunctionExists.c:(.text+0x10): undefined reference to `dladdr'
+collect2: error: ld returned 1 exit status
+gmake[5]: *** [cmTC_6cb3f] Error 1
+gmake[5]: Leaving directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+gmake[4]: *** [cmTC_6cb3f/fast] Error 2
+gmake[4]: Leaving directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+
+
+Performing C++ SOURCE FILE Test HAVE_NO_UNNAMED_TYPE_TEMPLATE_ARGS failed with the following output:
+Change Dir: /data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_577f7/fast"
+gmake[4]: Entering directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+/usr/bin/gmake -f CMakeFiles/cmTC_577f7.dir/build.make CMakeFiles/cmTC_577f7.dir/build
+gmake[5]: Entering directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_577f7.dir/src.cxx.o
+/data/opt/gcc-6.1.0-bottle/bin/g++    -DHAVE_NO_UNNAMED_TYPE_TEMPLATE_ARGS   -Wunnamed-type-template-args -o CMakeFiles/cmTC_577f7.dir/src.cxx.o -c /data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp/src.cxx
+g++: error: unrecognized command line option '-Wunnamed-type-template-args'
+gmake[5]: *** [CMakeFiles/cmTC_577f7.dir/src.cxx.o] Error 1
+gmake[5]: Leaving directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+gmake[4]: *** [cmTC_577f7/fast] Error 2
+gmake[4]: Leaving directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+
+Source file was:
+int main() { return 0; }
+Determining if the function get_static_proc_name exists in the unwind failed with the following output:
+Change Dir: /data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_eb45f/fast"
+gmake[4]: Entering directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+/usr/bin/gmake -f CMakeFiles/cmTC_eb45f.dir/build.make CMakeFiles/cmTC_eb45f.dir/build
+gmake[5]: Entering directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_eb45f.dir/CheckFunctionExists.c.o
+/data/opt/gcc-6.1.0-bottle/bin/gcc   -DCHECK_FUNCTION_EXISTS=get_static_proc_name   -o CMakeFiles/cmTC_eb45f.dir/CheckFunctionExists.c.o   -c /data/opt/brew/Cellar/cmake/3.10.1/share/cmake/Modules/CheckFunctionExists.c
+Linking C executable cmTC_eb45f
+/data/opt/brew/Cellar/cmake/3.10.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_eb45f.dir/link.txt --verbose=1
+/data/opt/gcc-6.1.0-bottle/bin/gcc  -DCHECK_FUNCTION_EXISTS=get_static_proc_name    -rdynamic CMakeFiles/cmTC_eb45f.dir/CheckFunctionExists.c.o  -o cmTC_eb45f -lunwind 
+CMakeFiles/cmTC_eb45f.dir/CheckFunctionExists.c.o: In function `main':
+CheckFunctionExists.c:(.text+0x10): undefined reference to `get_static_proc_name'
+collect2: error: ld returned 1 exit status
+gmake[5]: *** [cmTC_eb45f] Error 1
+gmake[5]: Leaving directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+gmake[4]: *** [cmTC_eb45f/fast] Error 2
+gmake[4]: Leaving directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+
+
+Performing C SOURCE FILE Test HAVE_RWLOCK failed with the following output:
+Change Dir: /data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_b25d3/fast"
+gmake[4]: Entering directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+/usr/bin/gmake -f CMakeFiles/cmTC_b25d3.dir/build.make CMakeFiles/cmTC_b25d3.dir/build
+gmake[5]: Entering directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_b25d3.dir/src.c.o
+/data/opt/gcc-6.1.0-bottle/bin/gcc   -DHAVE_RWLOCK   -o CMakeFiles/cmTC_b25d3.dir/src.c.o   -c /data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_b25d3
+/data/opt/brew/Cellar/cmake/3.10.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b25d3.dir/link.txt --verbose=1
+/data/opt/gcc-6.1.0-bottle/bin/gcc  -DHAVE_RWLOCK    -rdynamic CMakeFiles/cmTC_b25d3.dir/src.c.o  -o cmTC_b25d3 
+CMakeFiles/cmTC_b25d3.dir/src.c.o: In function `main':
+src.c:(.text+0x15): undefined reference to `pthread_rwlock_init'
+src.c:(.text+0x21): undefined reference to `pthread_rwlock_rdlock'
+collect2: error: ld returned 1 exit status
+gmake[5]: *** [cmTC_b25d3] Error 1
+gmake[5]: Leaving directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+gmake[4]: *** [cmTC_b25d3/fast] Error 2
+gmake[4]: Leaving directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+
+Source file was:
+
+#define _XOPEN_SOURCE 500
+#include <pthread.h>
+int main(void)
+{
+  pthread_rwlock_t l;
+  pthread_rwlock_init(&l, NULL);
+  pthread_rwlock_rdlock(&l);
+  return 0;
+}
+
+Performing C SOURCE FILE Test HAVE___DECLSPEC failed with the following output:
+Change Dir: /data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_9a4c3/fast"
+gmake[4]: Entering directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+/usr/bin/gmake -f CMakeFiles/cmTC_9a4c3.dir/build.make CMakeFiles/cmTC_9a4c3.dir/build
+gmake[5]: Entering directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_9a4c3.dir/src.c.o
+/data/opt/gcc-6.1.0-bottle/bin/gcc   -DHAVE___DECLSPEC   -o CMakeFiles/cmTC_9a4c3.dir/src.c.o   -c /data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp/src.c
+/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp/src.c:2:1: warning: return type defaults to 'int' [-Wimplicit-int]
+ __declspec(selectany) int a;
+ ^~~~~~~~~~
+/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp/src.c: In function '__declspec':
+/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp/src.c:3:16: error: expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+ int main(void) { return 0; }
+                ^
+/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp/src.c:2:1: warning: type of 'selectany' defaults to 'int' [-Wimplicit-int]
+ __declspec(selectany) int a;
+ ^~~~~~~~~~
+/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp/src.c:2:27: error: declaration for parameter 'a' but no such parameter
+ __declspec(selectany) int a;
+                           ^
+/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp/src.c:3:16: error: expected '{' at end of input
+ int main(void) { return 0; }
+                ^
+gmake[5]: *** [CMakeFiles/cmTC_9a4c3.dir/src.c.o] Error 1
+gmake[5]: Leaving directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+gmake[4]: *** [cmTC_9a4c3/fast] Error 2
+gmake[4]: Leaving directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+
+Source file was:
+
+__declspec(selectany) int a;
+int main(void) { return 0; }
+
+Performing C++ SOURCE FILE Test STL_NO_NAMESPACE failed with the following output:
+Change Dir: /data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_04b60/fast"
+gmake[4]: Entering directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+/usr/bin/gmake -f CMakeFiles/cmTC_04b60.dir/build.make CMakeFiles/cmTC_04b60.dir/build
+gmake[5]: Entering directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_04b60.dir/src.cxx.o
+/data/opt/gcc-6.1.0-bottle/bin/g++    -DSTL_NO_NAMESPACE   -o CMakeFiles/cmTC_04b60.dir/src.cxx.o -c /data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp/src.cxx
+/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp/src.cxx:3:1: error: 'vector' does not name a type
+ vector<int> t; int main() { }
+ ^~~~~~
+gmake[5]: *** [CMakeFiles/cmTC_04b60.dir/src.cxx.o] Error 1
+gmake[5]: Leaving directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+gmake[4]: *** [cmTC_04b60/fast] Error 2
+gmake[4]: Leaving directory `/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-build/CMakeFiles/CMakeTmp'
+
+Source file was:
+
+#include <vector>
+vector<int> t; int main() { }
+

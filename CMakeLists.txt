@@ -35,6 +35,11 @@ add_subdirectory(husky)
 include_directories(husky)
 set(EXTERNAL_DEPENDENCIES husky)
 
+# Dependencies
+include(dep)
+
+add_definitions(${HUSKY_EXTERNAL_DEFINITION})
+
 find_package(gflags REQUIRED)
 message(STATUS "GFLAGS_LIBRARY ${GFLAGS_LIBRARY}")
 message(STATUS "GFLAGS_INCLUDE_DIR ${GFLAGS_INCLUDE_DIR}")

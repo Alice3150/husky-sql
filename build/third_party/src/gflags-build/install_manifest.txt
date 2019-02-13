@@ -1,0 +1,17 @@
+/data/opt/tmp/1155107959/husky-sql/build/lib/libgflags.so.2.2.1
+/data/opt/tmp/1155107959/husky-sql/build/lib/libgflags.so.2.2
+/data/opt/tmp/1155107959/husky-sql/build/lib/libgflags.so
+/data/opt/tmp/1155107959/husky-sql/build/lib/libgflags_nothreads.so.2.2.1
+/data/opt/tmp/1155107959/husky-sql/build/lib/libgflags_nothreads.so.2.2
+/data/opt/tmp/1155107959/husky-sql/build/lib/libgflags_nothreads.so
+/data/opt/tmp/1155107959/husky-sql/build/include/gflags/gflags.h
+/data/opt/tmp/1155107959/husky-sql/build/include/gflags/gflags_declare.h
+/data/opt/tmp/1155107959/husky-sql/build/include/gflags/gflags_completions.h
+/data/opt/tmp/1155107959/husky-sql/build/include/gflags/gflags_gflags.h
+/data/opt/tmp/1155107959/husky-sql/build/lib/cmake/gflags/gflags-config.cmake
+/data/opt/tmp/1155107959/husky-sql/build/lib/cmake/gflags/gflags-config-version.cmake
+/data/opt/tmp/1155107959/husky-sql/build/lib/cmake/gflags/gflags-targets.cmake
+/data/opt/tmp/1155107959/husky-sql/build/lib/cmake/gflags/gflags-targets-release.cmake
+/data/opt/tmp/1155107959/husky-sql/build/bin/gflags_completions.sh
+/data/opt/tmp/1155107959/husky-sql/build/lib/pkgconfig/gflags.pc
+/home/1155107959/.cmake/packages/gflags/b2d75d4202cd158b5b850271a974adf7

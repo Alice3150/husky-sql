@@ -1,0 +1,11 @@
+/data/opt/tmp/1155107959/husky-sql/build/husky/lib/libglog.a
+/data/opt/tmp/1155107959/husky-sql/build/husky/include/glog/config.h
+/data/opt/tmp/1155107959/husky-sql/build/husky/include/glog/logging.h
+/data/opt/tmp/1155107959/husky-sql/build/husky/include/glog/raw_logging.h
+/data/opt/tmp/1155107959/husky-sql/build/husky/include/glog/stl_logging.h
+/data/opt/tmp/1155107959/husky-sql/build/husky/include/glog/vlog_is_on.h
+/data/opt/tmp/1155107959/husky-sql/build/husky/include/glog/log_severity.h
+/data/opt/tmp/1155107959/husky-sql/build/husky/lib/cmake/glog/glog-config.cmake
+/data/opt/tmp/1155107959/husky-sql/build/husky/lib/cmake/glog/glog-config-version.cmake
+/data/opt/tmp/1155107959/husky-sql/build/husky/lib/cmake/glog/glog-targets.cmake
+/data/opt/tmp/1155107959/husky-sql/build/husky/lib/cmake/glog/glog-targets-noconfig.cmake

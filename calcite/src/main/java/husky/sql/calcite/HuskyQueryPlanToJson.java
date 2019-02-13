@@ -31,6 +31,7 @@ import java.util.Properties;
 import java.util.List;
 import java.util.ArrayList;
 import java.lang.AssertionError;
+import java.io.FileWriter;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -40,8 +41,8 @@ import static org.apache.calcite.plan.Contexts.EMPTY_CONTEXT;
 public class HuskyQueryPlanToJson {
     
     public static void main(String[] args) throws IOException, SQLException, ValidationException, RelConversionException {
-        if (args.length < 1) {
-            System.out.println("usage: ./HuskyQueryPlanToJson \"<query string>\"");
+        if (args.length < 2) {
+            System.out.println("usage: ./HuskyQueryPlanToJson \"<query string>\" \"<file path>\"");
         }
         Properties info = new Properties();
         info.setProperty("lex", "JAVA");
@@ -62,7 +63,17 @@ public class HuskyQueryPlanToJson {
         RelOptTable logicalTable = logicalPlanRoot.getTable();
         List<String> names = logicalTable.getQualifiedName();
         SimpleTestTable simpletable = (SimpleTestTable) connection.getRootSchema().getSubSchema(names.get(0)).getTable(names.get(1));
-        System.out.println(convertJson.getJson(logicalPlanRoot, simpletable)); 
+        JSONObject jsonPlan = convertJson.getJson(logicalPlanRoot, simpletable);
+
+        String outputJsonPath = args[1];
+        try (FileWriter file = new FileWriter(outputJsonPath)) {
+            file.write(jsonPlan.toString());
+            file.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(jsonPlan);
     }
 
     private HuskyQueryPlanToJson() {}

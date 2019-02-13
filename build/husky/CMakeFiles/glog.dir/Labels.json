@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/data/opt/tmp/1155107959/husky-sql/build/husky/CMakeFiles/glog"
+		},
+		{
+			"file" : "/data/opt/tmp/1155107959/husky-sql/build/husky/CMakeFiles/glog.rule"
+		},
+		{
+			"file" : "/data/opt/tmp/1155107959/husky-sql/build/husky/CMakeFiles/glog-complete.rule"
+		},
+		{
+			"file" : "/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-stamp/glog-install.rule"
+		},
+		{
+			"file" : "/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-stamp/glog-mkdir.rule"
+		},
+		{
+			"file" : "/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-stamp/glog-download.rule"
+		},
+		{
+			"file" : "/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-stamp/glog-update.rule"
+		},
+		{
+			"file" : "/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-stamp/glog-patch.rule"
+		},
+		{
+			"file" : "/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-stamp/glog-configure.rule"
+		},
+		{
+			"file" : "/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/glog-stamp/glog-build.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"glog"
+		],
+		"name" : "glog"
+	}
+}
