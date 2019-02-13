@@ -50,3 +50,7 @@ make HuskyQueryPlan
 ```bash
 make HuskyQueryPlanToJson
 ```
+##### Get query execution 
+```bash
+make TestExecute
+```
