@@ -42,3 +42,11 @@ make ExecuteQuery
 ```bash
 make QueryPlan
 ```
+##### Get husky query plan
+```bash
+make HuskyQueryPlan
+```
+##### Get husky query plan JSON
+```bash
+make HuskyQueryPlanToJson
+```
