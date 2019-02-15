@@ -12,17 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include_directories(${PROJECT_SOURCE_DIR} ${PROJECT_SOURCE_DIR}/husky ${HUSKY_EXTERNAL_INCLUDE} ${EXTERNAL_INCLUDE})
-set(husky-sql husky) 
+include_directories(${PROJECT_SOURCE_DIR} ${HUSKY_EXTERNAL_INCLUDE} ${EXTERNAL_INCLUDE})
+set(husky-sql husky husky-sql-inner) 
 
-file(GLOB husky-sql-src
-  excute.cpp
-  relnode/husky_logical_table_scan.cpp
-  rexnode/condition.cpp
-  utils/json_parser.cpp
-  )
-
-husky_cache_variable(husky-sql-src ${husky-sql-src})
-add_library(husky-sql-inner SHARED ${husky-sql-src})
-target_link_libraries(husky-sql-inner ${husky-sql})
-target_link_libraries(husky-sql-inner ${HUSKY_EXTERNAL_LIB})
+# TestModel
+add_executable(ExecuteSimpleSQL execute_simple_sql.cpp)
+target_link_libraries(ExecuteSimpleSQL ${husky-sql})
+target_link_libraries(ExecuteSimpleSQL ${HUSKY_EXTERNAL_LIB} ${EXTERNAL_LIB})
+add_dependencies(ExecuteSimpleSQL ${EXTERNAL_DEPENDENCIES})

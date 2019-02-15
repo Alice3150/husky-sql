@@ -53,4 +53,5 @@ add_subdirectory(calcite)
 add_subdirectory(husky-sql)
 
 # Examples & Tests
+add_subdirectory(example)
 add_subdirectory(test)

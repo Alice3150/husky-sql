@@ -19,11 +19,11 @@
 
 #include "core/engine.hpp"
 
-#include "relnode/abstract_rel_node.hpp"
-#include "relnode/husky_logical_table_scan.hpp"
-#include "rexnode/condition.hpp"
-#include "table/table.hpp"
-#include "utils/json_parser.hpp"
+#include "husky-sql/relnode/abstract_rel_node.hpp"
+#include "husky-sql/relnode/husky_logical_table_scan.hpp"
+#include "husky-sql/rexnode/condition.hpp"
+#include "husky-sql/table/table.hpp"
+#include "husky-sql/utils/json_parser.hpp"
 
 /* Example Config
  * master_host=proj99
@@ -48,11 +48,20 @@ using husky::sql::AbstractRelNode;
 using husky::sql::HuskyLogicalTableScan;
 using husky::sql::Condition;
 using husky::sql::Table;
+using husky::sql::JsonParser;
 
 void execute() {
     // load plan.json
-    
-    // excute pysical plan
+    std::string json_url = Context::get_param("json_url");
+    JsonParser json_parser(json_url);
+    AbstractRelNode * first_rel_node = json_parser.get_first_rel_node();
+    // execute physical plan
+    std::vector<std::vector<std::string> > output;
+    first_rel_node->get_output(output);
+    LOG(INFO) << "Output result: ";
+    // for(int i = 0; i < output.size(); i++) {
+    //     LOG(INFO) << output[i];
+    // }
 }
 
 int main(int argc, char** argv) {

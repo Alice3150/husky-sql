@@ -13,7 +13,7 @@ class AbstractRelNode {
     	~AbstractRelNode() { }
 		inline void add_input_rel_node(std::unique_ptr<AbstractRelNode> input) { inputs_.push_back(std::move(input)); }
 		inline std::vector<std::unique_ptr<AbstractRelNode> > const & get_inputs() const { return inputs_; }
-		virtual std::vector<std::vector<std::string> > get_output() const = 0;
+		virtual void get_output(std::vector<std::vector<std::string> > & output) const = 0;
 
 	protected:
 		std::string name_;

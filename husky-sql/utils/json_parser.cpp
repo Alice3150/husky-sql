@@ -1,17 +1,17 @@
-#include "utils/json_parser.hpp"
+#include "husky-sql/utils/json_parser.hpp"
 
-#include "table/table.hpp"
+#include "husky-sql/table/table.hpp"
+#include "husky-sql/relnode/husky_logical_table_scan.hpp"
 
 #include <fstream>
+#include <sstream>
 
 namespace husky {
 namespace sql {
 
-JsonParser::JsonParser(const std::string & json_path): json_path_(json_path) { }
-
-std::unique_ptr<AbstractRelNode> JsonParser::get_first_rel_node() {
+AbstractRelNode * JsonParser::get_first_rel_node() {
 	json j = get_json();
-	return get_rel_node(j);
+	return get_rel_node(j).get();
 }
 
 std::unique_ptr<AbstractRelNode> JsonParser::get_rel_node(json j) {
@@ -37,7 +37,7 @@ std::unique_ptr<AbstractRelNode> JsonParser::get_rel_node(json j) {
 		std::string line;
 		while(std::getline(table_file, line)) {
 			std::stringstream linestream(line);
-			std::vector<string> row_data;
+			std::vector<std::string> row_data;
 			for(int i = 0; i < column_count; i++) {
 				std::string data_cell;
 				std::getline(linestream, data_cell, '\t');
@@ -45,7 +45,7 @@ std::unique_ptr<AbstractRelNode> JsonParser::get_rel_node(json j) {
 			}
 			table->add_row_data(row_data); 
 		}
-		hlts.set_table(std::move(table));
+		hlts->set_table(std::move(table));
 
 		/* set projection */
 		json projection = j["projection"];
@@ -53,16 +53,20 @@ std::unique_ptr<AbstractRelNode> JsonParser::get_rel_node(json j) {
 		for(auto& j_proj : projection) {
 			proj_index.push_back(j_proj.get<int>());
 		}
-		hlts.set_projection_index(proj_index);
+		hlts->set_projection_index(proj_index);
 
 		/* set condition */
 		json j_condition = j["condition"];
+		std::unique_ptr<Condition::Operand> head_operand = get_operand(j_condition);
+		std::unique_ptr<Condition> condition = std::make_unique<Condition>();
+		condition->set_head_operand(std::move(head_operand));
+		hlts->set_condition(std::move(condition));
 
 		/* set inputs */
 		json j_inputs = j["inputs"];
 		for(auto& j_input : j_inputs) {
 			auto input_rel = get_rel_node(j_input);
-			hlts.add_input_rel_node(std::move(input_rel));
+			hlts->add_input_rel_node(std::move(input_rel));
 		}
 
 		return hlts;
@@ -76,6 +80,31 @@ json JsonParser::get_json() {
 	json j;
 	i >> j;
 	return j;
+}
+
+std::unique_ptr<Condition::Operand> JsonParser::get_operand(json j) {
+	std::string type = j["type"].get<std::string>();
+	std::unique_ptr<Condition::Operand> operand = std::make_unique<Condition::Operand>(type);
+	
+	if(type == "function") {
+		std::string name = j["name"].get<std::string>();
+		operand->set_name(name);
+	} else if(type == "field") {
+		std::string datatype = j["datatype"].get<std::string>();
+		int index = j["index"].get<int>();
+		operand->set_datatype(datatype);
+		operand->set_index(index);
+	} else if(type == "constant") {
+		std::string value = j["value"].get<std::string>();
+		operand->set_value(value);
+	}
+	
+	json j_operands = j["operands"];
+	for(auto& j_op : j_operands) {
+		operand->add_operand(std::move(get_operand(j_op)));
+	}
+
+	return operand;
 }
 
 } // namespace sql

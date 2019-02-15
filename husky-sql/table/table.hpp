@@ -16,7 +16,7 @@ class Table {
 		/* setters and getters*/
 		inline int get_row_count() const { return data_.size(); }
 		inline int get_column_count() const { return data_[0].size(); }
-		inline std::vector<std::vector<std::string> > get_data() const { return data_; }
+		inline const std::vector<std::vector<std::string> > & get_data() const { return data_; }
 		inline void add_column(int index, const std::string& name, const std::string& datatype) {
 			columns_.push_back(std::make_unique<Column>(index, name, datatype));
 		}

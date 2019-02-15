@@ -17,7 +17,7 @@ class HuskyLogicalTableScan: public AbstractRelNode {
 			std::string name = "HuskyLogicalTableScan";
 			name_ = name; 
 		}
-		~HuskyLogicalTableScan() { }
+		~HuskyLogicalTableScan() {}
 
 		/* setter and getter */
 		inline void set_table(std::unique_ptr<Table> table) { table_ = std::move(table); }
@@ -26,9 +26,9 @@ class HuskyLogicalTableScan: public AbstractRelNode {
 
 		inline Table * get_table() { return table_.get(); }
 		inline Condition * get_condition() { return condition_.get(); }
-		inline std::vector<int> get_projection_index() { return projection_index_; }
+		inline const std::vector<int> & get_projection_index() const { return projection_index_; }
 
-		std::vector<std::vector<std::string> > get_output() const override;
+		void get_output(std::vector<std::vector<std::string> > & output) const override;
 
 	private:
 		std::unique_ptr<Table> table_;
