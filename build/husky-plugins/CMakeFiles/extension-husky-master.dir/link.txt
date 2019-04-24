@@ -1,2 +1,0 @@
-/data/opt/brew/bin/ar qc libextension-husky-master.a  CMakeFiles/extension-husky-master.dir/master/orc_assigner.cpp.o CMakeFiles/extension-husky-master.dir/master/parquet_assigner.cpp.o
-/data/opt/brew/bin/ranlib libextension-husky-master.a
