@@ -1,35 +1,63 @@
 #include "husky-sql/relnode/husky_logical_table_scan.hpp"
 
+#include "husky-sql/utils/save_to_hdfs.hpp"
+
 #include "core/engine.hpp"
-#include "husky-sql/table/row.hpp" // row object in husky
+
+#include "glog/logging.h"
+#include "glog/stl_logging.h"
 
 namespace husky {
 namespace sql {
 
-void HuskyLogicalTableScan::get_output(std::vector<std::vector<std::string> > & output) const {
-	// auto& row_objlist = ObjListStore::creat_objlist<Row>();
-	// auto& ch = ChannelStore::create_push_channel<std::vector<std::string>>(row_objlist, dst_list);
+ObjList<RowKV>& HuskyLogicalTableScan::get_output() const {
+    const std::vector<std::vector<std::string> > table_data = table_->get_data();
 
-    auto& table_data = table_->get_data();
-
+    auto& record_objlist = ObjListStore::create_objlist<RowKV>();
+    auto& record_ch = ChannelStore::create_push_channel<std::vector<std::string> >(record_objlist, record_objlist);
+    
     // add rows that satisfy condition and apply projection
-    // int index = 0;
     for(auto& row_data : table_data) {
-    	if(condition_->check_row(row_data)) {
-    		// keep this row
-    		// Row row(index);
-    		auto& proj_index = get_projection_index();
-    		std::vector<std::string> row_after_projection;
-    		for(int i : proj_index) {
-    			row_after_projection.push_back(row_data[i]);
-    		}
-    		output.push_back(row_after_projection);
-    		// row.set_row_data(row_after_projection);
-    		// row_objlist.add_object(row);
-
-    		// index++;
-    	}
+        std::vector<std::string> row_without_quotes; // For CHAR, VARCHAR, DATE type field, remove double quotes from string.
+        for(auto& cell : row_data) {
+            std::string value = cell;
+            value.erase(std::remove(value.begin(), value.end(), '\"' ), value.end());
+            row_without_quotes.push_back(value);
+        }
+        
+        if(!(this->is_filter()) || condition_->check_row(row_without_quotes)) {
+            // keep this row
+            std::vector<std::string> row_after_projection; 
+            if(this->is_projection()) {
+                auto& proj_index = get_projection_index();
+                for(int i : proj_index) {
+                    row_after_projection.push_back(row_without_quotes[i]);
+                }
+            } else {
+                /* no projection */
+                row_after_projection.insert(row_after_projection.end(), row_without_quotes.begin(), row_without_quotes.end());
+            }
+            // LOG_I << "Row: " << row_after_projection;
+            std::string key = "";
+            for(std::string data : row_after_projection) {
+                key = key + "_" + data;
+            }
+            record_ch.push(row_after_projection, key);
+        }
     }
+    record_ch.out();  // flush channel
+
+    unsigned long long count = 0;
+    list_execute(record_objlist, {&record_ch}, {}, [&record_ch, &count](RowKV& record) {
+        // LOG(INFO) << "set_data : " << record_ch.get(record)[0];
+        record.set_data(record_ch.get(record)[0]);
+        count++;
+    });
+    husky::LOG_I << "husky_logical_table_scan output row count: " << count;
+
+    table_->clear();
+
+    return record_objlist;
 }
 
 } // namespace sql

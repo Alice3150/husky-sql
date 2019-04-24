@@ -1,0 +1,49 @@
+{
+  "name": "Orsers",
+  "type": "custom",
+  "url": "hdfs:///user/hive-2.3.4/warehouse/tpch_flat_orc_10.db/orders",
+  "factory": "husky.sql.calcite.table.SimpleTestTableFactory",
+  "columns":[
+      {
+          "id": "0",
+          "name": "O_ORDERKEY",
+          "datatype": "int"
+      }, {
+          "id": "1",
+          "name": "O_CUSTKEY",
+          "datatype": "int"
+      }, {
+          "id": "2",
+          "name": "O_ORDERSTATUS",
+          "datatype": "char",
+          "length": "1"
+      }, {
+          "id": "3",
+          "name": "O_TOTALPRICE",
+          "datatype": "decimal"
+      }, {
+          "id": "4",
+          "name": "O_ORDERDATE",
+          "datatype": "date"
+      }, {
+          "id": "5",
+          "name": "O_ORDERPRIORITY",
+          "datatype": "char",
+          "length": "15"
+      }, {
+          "id": "6",
+          "name": "O_CLERK",
+          "datatype": "char",
+          "length": "15"
+      }, {
+          "id": "7",
+          "name": "O_SHIPPRIORITY",
+          "datatype": "int"
+      }, {
+          "id": "8",
+          "name": "O_COMMENT",
+          "datatype": "varchar",
+          "length": "79"
+      }
+  ]
+}

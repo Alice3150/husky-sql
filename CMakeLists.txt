@@ -16,6 +16,7 @@ project(husky-sql)
 cmake_minimum_required(VERSION 3.9.1)
 
 set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 SET(CPACK_PACKAGE_VERSION_MAJOR "1")
 SET(CPACK_PACKAGE_VERSION_MINOR "0")
 SET(CPACK_PACKAGE_VERSION_PATCH "0")
@@ -29,6 +30,9 @@ if(CMAKE_COMPILER_IS_GNUCXX)
   set(CMAKE_CXX_FLAGS_RELEASE "-O3 -w -DNDEBUG")
 endif()
 
+# PARQUET require Thrift version 0.11.0
+set(WITHOUT_THRIFT true) # workaround for avoiding using old thrift installation on cluster
+
 ### Third-party
 # Submodule
 add_subdirectory(husky)
@@ -40,17 +44,11 @@ include(dep)
 
 add_definitions(${HUSKY_EXTERNAL_DEFINITION})
 
-find_package(gflags REQUIRED)
-message(STATUS "GFLAGS_LIBRARY ${GFLAGS_LIBRARY}")
-message(STATUS "GFLAGS_INCLUDE_DIR ${GFLAGS_INCLUDE_DIR}")
-list(APPEND EXTERNAL_INCLUDES ${GFLAGS_INCLUDE_DIR})
-list(APPEND EXTERNAL_LIBRARY ${GFLAGS_LIBRARY})
-list(APPEND EXTERNAL_DEPENDENCIES gflags)
-
 ### Directories
 # Sources
 add_subdirectory(calcite)
 add_subdirectory(husky-sql)
+add_subdirectory(husky-plugins)
 
 # Examples & Tests
 add_subdirectory(example)

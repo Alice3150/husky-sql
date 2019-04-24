@@ -25,11 +25,13 @@ add_test( NAME java_test COMMAND mvn -Pcmake -Dbuild.dir=${CMAKE_CURRENT_BINARY_
 install( FILES ${HuskySQL_JARS} DESTINATION share)
 
 # Executables
-add_custom_target(QueryPlan ALL mvn exec:java -Dexec.mainClass="husky.sql.calcite.planner.SimpleQueryPlanner" -Dexec.args=\"\'select TRANS_ID,ITEM_ID,PRICE from Parts\'\" WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} DEPENDS ${HuskySQL_JARS})
-add_custom_target(ExecuteQuery ALL mvn exec:java -Dexec.mainClass="husky.sql.calcite.Execute" -Dexec.args=\"\'select TRANS_ID,ITEM_ID,PRICE,SELLER_NAME,BUYER_NAME from Parts\'\" WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} DEPENDS ${HuskySQL_JARS})
+add_custom_target(QueryPlan ALL mvn exec:java -Dexec.mainClass="husky.sql.calcite.planner.SimpleQueryPlanner" -Dexec.args=\"\'select TRANS_ID,ITEM_ID,PRICE,SELLER_ID,SELLER_NAME from Parts where PRICE > 2.0 and ITEM_ID = 2 or SELLER_ID = 4\'\" WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} DEPENDS ${HuskySQL_JARS})
+
+add_custom_target(ExecuteQuery ALL mvn exec:java -Dexec.mainClass="husky.sql.calcite.Execute" -Dexec.args=\"\'select TRANS_ID,ITEM_ID,PRICE,SELLER_ID,SELLER_NAME from Parts where PRICE > 2.0 and ITEM_ID = 2 or SELLER_ID = 4\'\" WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} DEPENDS ${HuskySQL_JARS})
 
 # Executables
-add_custom_target(HuskyQueryPlan ALL mvn exec:java -Dexec.mainClass="husky.sql.calcite.planncd er.HuskyQueryPlanner" -Dexec.args=\"\'select TRANS_ID,ITEM_ID,PRICE,SELLER_ID,SELLER_NAME from Parts where PRICE > 2.0 and ITEM_ID = 2 or SELLER_ID = 4\'\" WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} DEPENDS ${HuskySQL_JARS})
+set(as_string "A")
+add_custom_target(HuskyQueryPlan ALL mvn exec:java -Dexec.mainClass="husky.sql.calcite.planner.HuskyQueryPlanner" -Dexec.args=\"\'select L_RETURNFLAG, L_LINESTATUS, sum(L_QUANTITY) as SUM_QTY, sum(L_EXTENDEDPRICE) as SUM_BASE_PRICE, sum(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) as SUM_DISC_PRICE, sum(L_EXTENDEDPRICE * (1 - L_DISCOUNT) * (1 + L_TAX)) as SUM_CHARGE, avg(L_QUANTITY) as AVG_QTY, avg(L_EXTENDEDPRICE) as AVG_PRICE, avg(L_DISCOUNT) as AVG_DISC, count(*) as COUNT_ORDER from Lineitem where L_ORDERKEY < 1000 group by L_RETURNFLAG, L_LINESTATUS order by L_RETURNFLAG, L_LINESTATUS \'\" WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} DEPENDS ${HuskySQL_JARS})
 
 # Executables
-add_custom_target(HuskyQueryPlanToJson ALL mvn exec:java -Dexec.mainClass="husky.sql.calcite.HuskyQueryPlanToJson" -Dexec.args=\"\'select TRANS_ID,ITEM_ID,PRICE,SELLER_ID,SELLER_NAME from Parts where PRICE > 2.0 and ITEM_ID = 2 or SELLER_ID = 4\' \'output/plan.json\'\" WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} DEPENDS ${HuskySQL_JARS})
+add_custom_target(HuskyQueryPlanToJson ALL mvn exec:java -Dexec.mainClass="husky.sql.calcite.HuskyQueryPlanToJson" -Dexec.args=\"\'select count(P_PARTKEY),P_BRAND from Part where P_PARTKEY < 1000 group by P_BRAND order by count(P_PARTKEY) asc\' \'output/plan.json\'\" WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} DEPENDS ${HuskySQL_JARS})

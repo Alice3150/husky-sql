@@ -115,7 +115,7 @@ public class SimpleTestTable extends AbstractTable implements ScannableTable {
             String datatype = (String)column.get("datatype");
 
             Column newCol = new Column(id, name, datatype);
-            if(datatype.equals("varchar")) {
+            if(datatype.equals("varchar") || datatype.equals("char")) {
               newCol.setLength(Integer.parseInt((String)column.get("length")));
             }
 
@@ -129,8 +129,8 @@ public class SimpleTestTable extends AbstractTable implements ScannableTable {
       e.printStackTrace();
     }
 
-    this.rows = new ArrayList<Object[]>();
-    setRows(this.url);
+    // this.rows = new ArrayList<Object[]>();
+    // setRows(this.url);
     setProtoRowType();
   }
 
@@ -150,6 +150,12 @@ public class SimpleTestTable extends AbstractTable implements ScannableTable {
             curRow.add(Float.parseFloat(row.get(i)));
           } else if(columns.get(i).getDatatype().equals("varchar")) {
             curRow.add(row.get(i));
+          } else if(columns.get(i).getDatatype().equals("decimal")) {
+            curRow.add(Double.parseDouble(row.get(i)));
+          } else if(columns.get(i).getDatatype().equals("char")) {
+            curRow.add(row.get(i));
+          } else if(columns.get(i).getDatatype().equals("date")) {
+            curRow.add(row.get(i)); //TODO - DATE
           }
         }
         this.rows.add(curRow.toArray());
@@ -166,6 +172,12 @@ public class SimpleTestTable extends AbstractTable implements ScannableTable {
       return SqlTypeName.VARCHAR;
     } else if(datatype.equals("float")) {
       return SqlTypeName.FLOAT;
+    } else if(datatype.equals("decimal")) {
+      return SqlTypeName.DECIMAL;
+    } else if(datatype.equals("char")) {
+      return SqlTypeName.CHAR;
+    } else if(datatype.equals("date")) {
+      return SqlTypeName.DATE;
     }
 
     return SqlTypeName.VARCHAR; // must return something

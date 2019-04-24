@@ -13,7 +13,7 @@
 # limitations under the License.
 
 include_directories(${PROJECT_SOURCE_DIR} ${HUSKY_EXTERNAL_INCLUDE} ${EXTERNAL_INCLUDE})
-set(husky-sql husky husky-sql-inner) 
+set(husky-sql husky extension-husky-io extension-husky-master husky-sql-inner) 
 
 # TestModel
 add_executable(ExecuteSimpleSQL execute_simple_sql.cpp)

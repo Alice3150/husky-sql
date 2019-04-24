@@ -14,16 +14,20 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 
 #include "glog/logging.h"
+#include "glog/stl_logging.h"
 
 #include "core/engine.hpp"
 
 #include "husky-sql/relnode/abstract_rel_node.hpp"
 #include "husky-sql/relnode/husky_logical_table_scan.hpp"
-#include "husky-sql/rexnode/condition.hpp"
 #include "husky-sql/table/table.hpp"
+#include "husky-sql/table/table_reader_factory.hpp"
 #include "husky-sql/utils/json_parser.hpp"
+#include "husky-sql/utils/row_kv.hpp"
+#include "husky-sql/utils/save_to_hdfs.hpp"
 
 /* Example Config
  * master_host=proj99
@@ -35,33 +39,33 @@
  *
  * serve=0
  *
- * json_path=hdfs://localhost:9000/husky_sql/physical_plan/plan.json
- * table_path=hdfs://hdfs://localhost:9000/husky_sql/table/table
- * output_path=hdfs://proj99:9000/kylin/kylin_metadata/kylin-86dffb72-3bf9-4150-b9bd-52332d9a7af5/simple_sales_model/cuboid/
+ * json_path=hdfs://localhost:9000/husky_sql/input/plan.json
+ * output_path=hdfs://proj99:9000/husky_sql/output/
  *
  * [worker]
  * info=w1:4
  */
 
 using husky::Context;
+using husky::ObjList;
 using husky::sql::AbstractRelNode;
 using husky::sql::HuskyLogicalTableScan;
-using husky::sql::Condition;
 using husky::sql::Table;
+using husky::sql::TableReaderFactory;
 using husky::sql::JsonParser;
+using husky::sql::RowKV;
 
 void execute() {
     // load plan.json
+    LOG(INFO) << "Loading JSON...";
     std::string json_url = Context::get_param("json_url");
+    std::string output_path = Context::get_param("output_path");
     JsonParser json_parser(json_url);
-    AbstractRelNode * first_rel_node = json_parser.get_first_rel_node();
+    std::unique_ptr<AbstractRelNode> first_rel_node = json_parser.get_first_rel_node();
+
     // execute physical plan
-    std::vector<std::vector<std::string> > output;
-    first_rel_node->get_output(output);
-    LOG(INFO) << "Output result: ";
-    // for(int i = 0; i < output.size(); i++) {
-    //     LOG(INFO) << output[i];
-    // }
+    ObjList<RowKV>& output_objlist = first_rel_node->get_output();
+    save_to_hdfs(output_objlist, output_path);
 }
 
 int main(int argc, char** argv) {

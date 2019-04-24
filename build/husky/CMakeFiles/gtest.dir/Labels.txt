@@ -1,0 +1,13 @@
+# Target labels
+ gtest
+# Source files and their labels
+/data/opt/tmp/1155107959/husky-sql/build/husky/CMakeFiles/gtest
+/data/opt/tmp/1155107959/husky-sql/build/husky/CMakeFiles/gtest.rule
+/data/opt/tmp/1155107959/husky-sql/build/husky/CMakeFiles/gtest-complete.rule
+/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/gtest-stamp/gtest-install.rule
+/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/gtest-stamp/gtest-mkdir.rule
+/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/gtest-stamp/gtest-download.rule
+/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/gtest-stamp/gtest-update.rule
+/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/gtest-stamp/gtest-patch.rule
+/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/gtest-stamp/gtest-configure.rule
+/data/opt/tmp/1155107959/husky-sql/build/husky/third_party/src/gtest-stamp/gtest-build.rule

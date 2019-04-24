@@ -54,7 +54,8 @@ public class HuskyQueryPlanner {
         // Create the query planner with the toy schema
         HuskyQueryPlanner queryPlanner = new HuskyQueryPlanner(connection.getRootSchema()
                 .getSubSchema(connection.getSchema()));
-        RelRoot root = queryPlanner.getLogicalPlan(args[0]);
+        /* TODO - how to pass single quote mark from agrs*/
+        RelRoot root = queryPlanner.getLogicalPlan("select L_RETURNFLAG, L_LINESTATUS, sum(L_QUANTITY) as SUM_QTY, sum(L_EXTENDEDPRICE) as SUM_BASE_PRICE, sum(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) as SUM_DISC_PRICE, sum(L_EXTENDEDPRICE * (1 - L_DISCOUNT) * (1 + L_TAX)) as SUM_CHARGE, avg(L_QUANTITY) as AVG_QTY, avg(L_EXTENDEDPRICE) as AVG_PRICE, avg(L_DISCOUNT) as AVG_DISC, count(*) as COUNT_ORDER FROM Lineitem WHERE L_SHIPDATE <= DATE \'1998-12-01\' - INTERVAL \'90\' DAY GROUP BY L_RETURNFLAG, L_LINESTATUS ORDER BY L_RETURNFLAG, L_LINESTATUS");
         System.out.println("Initial logical plan: ");
         System.out.println(RelOptUtil.toString(root.rel));
         System.out.println(RelOptUtil.toString(queryPlanner.getPhysicalPlan(root)));

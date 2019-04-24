@@ -107,15 +107,15 @@ public class HuskyRuleSets {
 //            LogicalUnnestRule.INSTANCE,
 
 //            translate to husky logical rel nodes
-//            HuskyLogicalAggregate.CONVERTER,
+           HuskyLogicalAggregateConverter.INSTANCE,
 //            HuskyLogicalWindowAggregate.CONVERTER,
 //            HuskyLogicalOverWindow.CONVERTER,
             HuskyLogicalCalcConverter.INSTANCE,
 //            HuskyLogicalCorrelate.CONVERTER,
 //            HuskyLogicalIntersect.CONVERTER,
-//            HuskyLogicalJoin.CONVERTER,
+           HuskyLogicalJoinConverter.INSTANCE,
 //            HuskyLogicalMinus.CONVERTER,
-//            HuskyLogicalSort.CONVERTER,
+           HuskyLogicalSortConverter.INSTANCE,
 //            HuskyLogicalUnion.CONVERTER,
 //            HuskyLogicalValues.CONVERTER,
 //            HuskyLogicalTableSourceScanConverter.INSTANCE,

@@ -13,16 +13,23 @@
 # limitations under the License.
 
 include_directories(${PROJECT_SOURCE_DIR} ${PROJECT_SOURCE_DIR}/husky ${HUSKY_EXTERNAL_INCLUDE} ${EXTERNAL_INCLUDE})
-set(husky-sql husky) 
+set(husky-sql husky extension-husky-io extension-husky-master) 
 
 file(GLOB husky-sql-src
-  excute.cpp
   relnode/husky_logical_table_scan.cpp
-  rexnode/condition.cpp
+  relnode/husky_logical_calc.cpp
+  relnode/husky_logical_aggregate.cpp
+  relnode/husky_logical_sort.cpp
+  relnode/husky_logical_join.cpp
+  rexnode/rex_node.cpp
+  rexnode/aggregate_call.cpp
+  rexnode/aggregate_combiner.cpp
   utils/json_parser.cpp
+  utils/save_to_hdfs.cpp
   )
 
 husky_cache_variable(husky-sql-src ${husky-sql-src})
-add_library(husky-sql-inner SHARED ${husky-sql-src})
+add_library(husky-sql-inner STATIC ${husky-sql-src})
 target_link_libraries(husky-sql-inner ${husky-sql})
 target_link_libraries(husky-sql-inner ${HUSKY_EXTERNAL_LIB})
+target_link_libraries(husky-sql-inner ${EXTERNAL_LIB})
