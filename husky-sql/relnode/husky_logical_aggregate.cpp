@@ -31,14 +31,13 @@ ObjList<RowKV>& HuskyLogicalAggregate::get_output() const {
 	/* aggregate */
 	auto& group_index = this->get_group_index();
 	auto& aggregate_input_index = this->get_aggregate_input_index();
-	// husky::LOG_I << "Aggregate Input Index: " << aggregate_input_index;
 	list_execute(input_objlist, {}, {&group_ch}, [&group_index, &aggregate_input_index, &group_ch](RowKV& record) {
 		auto& row_data = record.get_data();
 
 		/* make group key string*/
-		std::string group_key_str  = "";
-		for(int index : group_index) {
-			group_key_str = group_key_str + "_" + row_data[index];
+		std::string group_key_str  = row_data[group_index[0]];
+		for(int index = 1; index < group_index.size(); index++) {
+			group_key_str = group_key_str + "_" + row_data[group_index[index]];
 		}
 		
 		/* set inc */
@@ -50,8 +49,6 @@ ObjList<RowKV>& HuskyLogicalAggregate::get_output() const {
 				inc.push_back("0");
 			}
 		}
-
-		// husky::LOG_I << "Group Key: " << group_key_str << " inc: " << inc;
 
 		group_ch.push(inc, group_key_str);
 		

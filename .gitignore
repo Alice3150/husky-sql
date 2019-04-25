@@ -1,2 +1,5 @@
 build/bin build/calcite build/CMakeCache.txt build/CMakeFiles build/cmake_install.cmake build/DartConfiguration.tcl build/husky build/husky-sql build/include build/lib build/Makefile build/test build/Testing build/third_party
 build/bin build/calcite build/CMakeCache.txt build/CMakeFiles build/cmake_install.cmake build/DartConfiguration.tcl build/example build/husky build/husky-sql build/include build/lib build/Makefile build/test build/Testing build/third_party
+debug.log
+build/calcite build/CMakeCache.txt build/CMakeFiles build/cmake_install.cmake build/conf build/DartConfiguration.tcl build/example build/exec.sh build/ExecuteSimpleSQL build/husky build/HuskyMaster build/husky-plugins build/husky-sql build/Makefile build/slaves build/test build/Testing build/third_party
+calcite/target/

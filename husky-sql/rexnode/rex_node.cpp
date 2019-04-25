@@ -25,74 +25,75 @@ bool RexNode::check_operand(const std::vector<std::string> & row, RexNode * op) 
 	} else if(op->get_type() == "function" && op->get_name() == "OR") {
 		return check_operand(row, op->get_input_rex_node(0)) || check_operand(row, op->get_input_rex_node(1));
 	} else if(op->get_type() == "function" && (op->get_name() == "=" || op->get_name() == "<" || op->get_name() == ">" || op->get_name() == "<=" || op->get_name() == ">=")) {
-		RexNode * right_op = op->get_input_rex_node(0);
-		auto right_pair = compute_operand(row, right_op);
-		std::string right_value = right_pair.first;
-		std::string right_datatype = right_pair.second;
-
-		RexNode * left_op = op->get_input_rex_node(1);
+		RexNode * left_op = op->get_input_rex_node(0);
 		auto left_pair = compute_operand(row, left_op);
 		std::string left_value = left_pair.first;
 		std::string left_datatype = left_pair.second;
 
-	 	if(right_datatype == "INTEGER" && left_datatype == "INTEGER") {
+		RexNode * right_op = op->get_input_rex_node(1);
+		auto right_pair = compute_operand(row, right_op);
+		std::string right_value = right_pair.first;
+		std::string right_datatype = right_pair.second;
+
+	 	if(left_datatype == "INTEGER" && right_datatype == "INTEGER") {
+	 		husky::LOG_I << "check_operand: left_value: " << left_value << " right_value: " << right_value;
 	 		if(op->get_name() == "=") {
-	 			return std::stoi(right_value) == std::stoi(left_value);
+	 			return std::stoi(left_value) == std::stoi(right_value);
 	 		} else if(op->get_name() == "<") {
-	 			return std::stoi(right_value) < std::stoi(left_value);
+	 			return std::stoi(left_value) < std::stoi(right_value);
 	 		} else if(op->get_name() == ">") {
-	 			return std::stoi(right_value) > std::stoi(left_value);
+	 			return std::stoi(left_value) > std::stoi(right_value);
 	 		} else if(op->get_name() == "<=") {
-	 			return std::stoi(right_value) <= std::stoi(left_value);
+	 			return std::stoi(left_value) <= std::stoi(right_value);
 	 		} else {
 	 			/* op->get_name() == ">=" */
-	 			return std::stoi(right_value) >= std::stoi(left_value);
+	 			return std::stoi(left_value) >= std::stoi(right_value);
 	 		} 
-	 	} else if(right_datatype == "FLOAT" && left_datatype == "FLOAT"){
+	 	} else if(left_datatype == "FLOAT" && right_datatype == "FLOAT"){
 	 		if(op->get_name() == "=") {
-	 			return std::stof(right_value) == std::stof(left_value);
+	 			return std::stof(left_value) == std::stof(right_value);
 	 		} else if(op->get_name() == "<") {
-	 			return std::stof(right_value) < std::stof(left_value);
+	 			return std::stof(left_value) < std::stof(right_value);
 	 		} else if(op->get_name() == ">") {
-	 			return std::stof(right_value) > std::stof(left_value);
+	 			return std::stof(left_value) > std::stof(right_value);
 	 		} else if(op->get_name() == "<=") {
-	 			return std::stof(right_value) <= std::stof(left_value);
+	 			return std::stof(left_value) <= std::stof(right_value);
 	 		} else {
 	 			/* op->get_name() == ">=" */
-	 			return std::stof(right_value) >= std::stof(left_value);
+	 			return std::stof(left_value) >= std::stof(right_value);
 	 		}
-	 	} else if(right_datatype == "DECIMAL" && left_datatype == "DECIMAL") {
+	 	} else if(left_datatype == "DECIMAL" && right_datatype == "DECIMAL") {
 	 		if(op->get_name() == "=") {
-	 			return std::stod(right_value) == std::stod(left_value);
+	 			return std::stod(left_value) == std::stod(right_value);
 	 		} else if(op->get_name() == "<") {
-	 			return std::stod(right_value) < std::stod(left_value);
+	 			return std::stod(left_value) < std::stod(right_value);
 	 		} else if(op->get_name() == ">") {
-	 			return std::stod(right_value) > std::stod(left_value);
+	 			return std::stod(left_value) > std::stod(right_value);
 	 		} else if(op->get_name() == "<=") {
-	 			return std::stod(right_value) <= std::stod(left_value);
+	 			return std::stod(left_value) <= std::stod(right_value);
 	 		} else {
 	 			/* op->get_name() == ">=" */
-	 			return std::stod(right_value) >= std::stod(left_value);
+	 			return std::stod(left_value) >= std::stod(right_value);
 	 		}
-	 	} else if((right_datatype == "CHAR" && left_datatype == "CHAR") || (right_datatype == "VARCHAR" && left_datatype == "VARCHAR")) {
-	 		return right_value == left_value; /* TODO - NOT equal case */
-	 	} else if(right_datatype == "DATE" && left_datatype == "DATE") {
+	 	} else if((left_datatype == "CHAR" && right_datatype == "CHAR") || (left_datatype == "VARCHAR" && right_datatype == "VARCHAR")) {
+	 		return left_value == right_value; /* TODO - NOT equal case */
+	 	} else if(left_datatype == "DATE" && right_datatype == "DATE") {
 	 		// husky::LOG_I << "Compare DATE: " << right_value << " with " << left_value;
 			
-			long long right_days = date_to_days(right_value);
 			long long left_days = date_to_days(left_value);
+			long long right_days = date_to_days(right_value);
 
 			if(op->get_name() == "=") {
-	 			return right_days == left_days;
+	 			return left_days == right_days;
 	 		} else if(op->get_name() == "<") {
-	 			return right_days < left_days;
+	 			return left_days < right_days;
 	 		} else if(op->get_name() == ">") {
-	 			return right_days > left_days;
+	 			return left_days > right_days;
 	 		} else if(op->get_name() == "<=") {
-	 			return right_days <= left_days;
+	 			return left_days <= right_days;
 	 		} else{
 	 			/* op->get_name() == ">=" */
-	 			return right_days >= left_days;
+	 			return left_days >= right_days;
 	 		}
 	 	} else {
 	 		husky::LOG_E << "Can not find matching datatype";
@@ -113,76 +114,76 @@ std::pair<std::string, std::string> RexNode::compute_operand(const std::vector<s
 		std::string datatype = op->get_dataype();
 		return std::make_pair(op->get_value(), op->get_dataype());
 	} else if(op->get_type() == "function" && (op->get_name() == "+" || op->get_name() == "-" || op->get_name() == "*" || op->get_name() == "/")) {
-		RexNode * right_op = op->get_input_rex_node(0);
-		auto right_pair = compute_operand(row, right_op);
-		std::string right_value = right_pair.first;
-		std::string right_datatype = right_pair.second;
-
-		RexNode * left_op = op->get_input_rex_node(1);
+		RexNode * left_op = op->get_input_rex_node(0);
 		auto left_pair = compute_operand(row, left_op);
 		std::string left_value = left_pair.first;
 		std::string left_datatype = left_pair.second;
+
+		RexNode * right_op = op->get_input_rex_node(1);
+		auto right_pair = compute_operand(row, right_op);
+		std::string right_value = right_pair.first;
+		std::string right_datatype = right_pair.second;
  		
- 		if(right_datatype == "INTEGER" && left_datatype == "INTEGER") {
+ 		if(left_datatype == "INTEGER" && right_datatype == "INTEGER") {
  			if(op->get_name() == "+") {
- 				return std::make_pair(std::to_string(std::stoi(right_value) + std::stoi(left_value)), right_datatype);
+ 				return std::make_pair(std::to_string(std::stoi(left_value) + std::stoi(right_value)), "INTEGER");
  			} else if(op->get_name() == "-") {
- 				return std::make_pair(std::to_string(std::stoi(right_value) - std::stoi(left_value)), right_datatype);
+ 				return std::make_pair(std::to_string(std::stoi(left_value) - std::stoi(right_value)), "INTEGER");
  			} else if(op->get_name() == "*") {
- 				return std::make_pair(std::to_string(std::stoi(right_value) * std::stoi(left_value)), right_datatype);
+ 				return std::make_pair(std::to_string(std::stoi(left_value) * std::stoi(right_value)), "INTEGER");
  			} else {
  				/* op->get_name() == "/" */
- 				return std::make_pair(std::to_string(std::stoi(right_value) / std::stoi(left_value)), right_datatype);
+ 				return std::make_pair(std::to_string(std::stoi(left_value) / std::stoi(right_value)), "INTEGER");
  			}
- 		} else if(right_datatype == "FLOAT" && left_datatype == "FLOAT") {
+ 		} else if(left_datatype == "FLOAT" && right_datatype == "FLOAT") {
  			if(op->get_name() == "+") {
- 				return std::make_pair(std::to_string(std::stof(right_value) + std::stof(left_value)), right_datatype);
+ 				return std::make_pair(std::to_string(std::stof(left_value) + std::stof(right_value)), "FLOAT");
  			} else if(op->get_name() == "-") {
- 				return std::make_pair(std::to_string(std::stof(right_value) - std::stof(left_value)), right_datatype);
+ 				return std::make_pair(std::to_string(std::stof(left_value) - std::stof(right_value)), "FLOAT");
  			} else if(op->get_name() == "*") {
- 				return std::make_pair(std::to_string(std::stof(right_value) * std::stof(left_value)), right_datatype);
+ 				return std::make_pair(std::to_string(std::stof(left_value) * std::stof(right_value)), "FLOAT");
  			} else {
  				/* op->get_name() == "/" */
- 				return std::make_pair(std::to_string(std::stof(right_value) / std::stof(left_value)), right_datatype);
+ 				return std::make_pair(std::to_string(std::stof(left_value) / std::stof(right_value)), "FLOAT");
  			}
- 		} else if(right_datatype == "DECIMAL" && left_datatype == "DECIMAL") {
+ 		} else if(left_datatype == "DECIMAL" && right_datatype == "DECIMAL") {
  			if(op->get_name() == "+") {
- 				return std::make_pair(std::to_string(std::stod(right_value) + std::stod(left_value)), right_datatype);
+ 				return std::make_pair(std::to_string(std::stod(left_value) + std::stod(right_value)), "DECIMAL");
  			} else if(op->get_name() == "-") {
- 				return std::make_pair(std::to_string(std::stod(right_value) - std::stod(left_value)), right_datatype);
+ 				return std::make_pair(std::to_string(std::stod(left_value) - std::stod(right_value)), "DECIMAL");
  			} else if(op->get_name() == "*") {
- 				return std::make_pair(std::to_string(std::stod(right_value) * std::stod(left_value)), right_datatype);
+ 				return std::make_pair(std::to_string(std::stod(left_value) * std::stod(right_value)), "DECIMAL");
  			} else{
  				/* op->get_name() == "/" */
- 				return std::make_pair(std::to_string(std::stod(right_value) / std::stod(left_value)), right_datatype);
+ 				return std::make_pair(std::to_string(std::stod(left_value) / std::stod(right_value)), "DECIMAL");
  			}
- 		} else if(right_datatype == "DATE" && left_datatype == "DATE") {
+ 		} else if(left_datatype == "DATE" && right_datatype == "DATE") {
 
-			long long right_days = date_to_days(right_value);
 			long long left_days = date_to_days(left_value);
+			long long right_days = date_to_days(right_value);
 
 			long long result_days;
 			if(op->get_name() == "+") {
-				result_days = right_days + left_days;
+				result_days = left_days + right_days;
 			} else {
 				/* op->get_name() == "-" */
-				result_days = right_days - left_days;
+				result_days = left_days - right_days;
 			}
 
 			std::string result_str = days_to_date(result_days);
 			// husky::LOG_I << right_value << " +/- " << left_value << " = " << result_str;
 			return std::make_pair(result_str, "DATE");	
- 		} else if(right_datatype == "DATE" && left_datatype == "INTERVAL_DAY") {
+ 		} else if(left_datatype == "DATE" && right_datatype == "INTERVAL_DAY") {
 			
- 			long long right_days = date_to_days(right_value);
-			long long left_days = std::stoll(left_value) / 86400000;
+ 			long long left_days = date_to_days(left_value);
+			long long right_days = std::stoll(right_value) / 86400000;
 
 			long long result_days;
 			if(op->get_name() == "+") {
-				result_days = right_days + left_days;
+				result_days = left_days + right_days;
 			} else {
 				/* op->get_name() == "-" */
-				result_days = right_days - left_days;
+				result_days = left_days - right_days;
 			}
 
 			std::string result_str = days_to_date(result_days);
@@ -196,6 +197,9 @@ std::pair<std::string, std::string> RexNode::compute_operand(const std::vector<s
 			return std::make_pair(msg, msg_type);
  		}
 
+	} else if(op->get_type() == "function" && op->get_name() == "CAST") {
+		RexNode * operand = op->get_input_rex_node(0);
+		return compute_operand(row, operand);
 	} else {
 		husky::LOG_E << "Can not find match operand type";
 		std::string msg = "error";

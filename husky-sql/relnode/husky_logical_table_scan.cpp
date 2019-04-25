@@ -12,11 +12,9 @@ namespace sql {
 
 ObjList<RowKV>& HuskyLogicalTableScan::get_output() const {
     const std::vector<std::vector<std::string> > table_data = table_->get_data();
-
     auto& record_objlist = ObjListStore::create_objlist<RowKV>();
     auto& record_ch = ChannelStore::create_push_channel<std::vector<std::string> >(record_objlist, record_objlist);
-    
-    // add rows that satisfy condition and apply projection
+    /* add rows that satisfy condition and apply projection */
     for(auto& row_data : table_data) {
         std::vector<std::string> row_without_quotes; // For CHAR, VARCHAR, DATE type field, remove double quotes from string.
         for(auto& cell : row_data) {
@@ -35,12 +33,13 @@ ObjList<RowKV>& HuskyLogicalTableScan::get_output() const {
                 }
             } else {
                 /* no projection */
-                row_after_projection.insert(row_after_projection.end(), row_without_quotes.begin(), row_without_quotes.end());
+                row_after_projection.insert(row_after_projection.end(), 
+                    row_without_quotes.begin(), 
+                    row_without_quotes.end());
             }
-            // LOG_I << "Row: " << row_after_projection;
-            std::string key = "";
-            for(std::string data : row_after_projection) {
-                key = key + "_" + data;
+            std::string key = row_after_projection[0];
+            for(int index = 1; index < row_after_projection.size(); index++) {
+                key = key + "_" + row_after_projection[index];
             }
             record_ch.push(row_after_projection, key);
         }
@@ -49,7 +48,6 @@ ObjList<RowKV>& HuskyLogicalTableScan::get_output() const {
 
     unsigned long long count = 0;
     list_execute(record_objlist, {&record_ch}, {}, [&record_ch, &count](RowKV& record) {
-        // LOG(INFO) << "set_data : " << record_ch.get(record)[0];
         record.set_data(record_ch.get(record)[0]);
         count++;
     });

@@ -40,7 +40,7 @@ class HuskyLogicalCalc: public AbstractRelNode {
 		ObjList<RowKV>& get_output() const override;
 
 	private:
-		std::vector<std::unique_ptr<RexNode> > projections_; // refers to an expression
+		std::vector<std::unique_ptr<RexNode> > projections_;
 		std::unique_ptr<RexNode> condition_; // refers to an expression
 		bool is_projection_;
 		bool is_filter_;

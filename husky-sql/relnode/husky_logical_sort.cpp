@@ -34,7 +34,7 @@ ObjList<RowKV>& HuskyLogicalSort::get_output() const {
 
 	list_execute(output_objlist, {&record_ch}, {}, [&record_ch](RowKV& record) {
 		auto& row_data = record_ch.get(record);
-		LOG(INFO) << "Sort Row: " << row_data;
+		// LOG(INFO) << "Sort Row: " << row_data;
 		record.set_data(row_data);
 	});
 

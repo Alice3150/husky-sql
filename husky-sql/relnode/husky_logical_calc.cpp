@@ -3,6 +3,9 @@
 #include "core/engine.hpp"
 #include "husky-sql/utils/save_to_hdfs.hpp"
 
+#include "glog/logging.h"
+#include "glog/stl_logging.h"
+
 namespace husky {
 namespace sql {
 
@@ -18,8 +21,7 @@ ObjList<RowKV>& HuskyLogicalCalc::get_output() const {
 	auto& record_ch = ChannelStore::create_push_channel<std::vector<std::string> >(input_objlist, output_objlist);
 
 	/* For each row, check condition and compute projection*/
-	long long count = 0;
-	list_execute(input_objlist, {}, {&record_ch}, [&projections, &condition, &record_ch, this, &count](RowKV& record) {
+	list_execute(input_objlist, {}, {&record_ch}, [&projections, &condition, &record_ch, this](RowKV& record) {
 		auto& row_data = record.get_data();
 		std::vector<std::string> result;
 		/* check condition */
@@ -34,14 +36,16 @@ ObjList<RowKV>& HuskyLogicalCalc::get_output() const {
 				result.insert(result.end(), row_data.begin(), row_data.end());
 			}
 			record_ch.push(result, record.id());
-			count++;
 		}
 	});
-	husky::LOG_I << "husky_logical_calc output row count: " << count;
 
-	list_execute(output_objlist, {&record_ch}, {}, [&record_ch](RowKV& record) {
-		record.set_data(record_ch.get(record)[0]);
+	long long count = 0;
+	list_execute(output_objlist, {&record_ch}, {}, [&record_ch, &count](RowKV& record) {
+		auto row_data = record_ch.get(record)[0];
+		record.set_data(row_data);
+		count++;
 	});
+	husky::LOG_I << "husky_logical_calc output row count: " << count;
 
 	ObjListStore::drop_objlist(input_objlist.get_id());
 
