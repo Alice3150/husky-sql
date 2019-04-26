@@ -131,8 +131,10 @@ std::unique_ptr<AbstractRelNode> JsonParser::get_rel_node(json j) {
 			std::string function_name = j_agg_call["function"].get<std::string>();
 			agg_call->set_function_name(function_name);
 
-			std::string agg_name = j_agg_call["name"].get<std::string>();
-			agg_call->set_aggregate_name(agg_name);
+			if(!j_agg_call["name"].is_null()) {
+				std::string agg_name = j_agg_call["name"].get<std::string>();
+				agg_call->set_aggregate_name(agg_name);
+			}
 
 			std::string datatype = j_agg_call["datatype"].get<std::string>();
 			agg_call->set_datatype(datatype);

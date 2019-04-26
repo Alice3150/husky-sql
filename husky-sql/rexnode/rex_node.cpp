@@ -99,6 +99,13 @@ bool RexNode::check_operand(const std::vector<std::string> & row, RexNode * op) 
 	 		husky::LOG_E << "Can not find matching datatype";
 	 		return false; /* TODO */
 	 	}
+	} else if(op->get_type() == "function" && op->get_name() == "IS NULL") {
+		RexNode * operand = operand->get_input_rex_node(0);
+		auto op_pair = compute_operand(row, operand);
+		std::string op_value = op_pair.first;
+		// std::string op_datatype = op_pair.second;
+		return op_value == "NULL";
+
 	} else {
 		husky::LOG_E << "Can not find match operand type";
 		return false;
@@ -200,6 +207,24 @@ std::pair<std::string, std::string> RexNode::compute_operand(const std::vector<s
 	} else if(op->get_type() == "function" && op->get_name() == "CAST") {
 		RexNode * operand = op->get_input_rex_node(0);
 		return compute_operand(row, operand);
+	} else if(op->get_type() == "function" && op->get_name() == "DATETIME_PLUS") {
+		RexNode * left_op = op->get_input_rex_node(0);
+		auto left_pair = compute_operand(row, left_op);
+		std::string left_value = left_pair.first;
+		std::string left_datatype = left_pair.second;
+
+		RexNode * right_op = op->get_input_rex_node(1);
+		auto right_pair = compute_operand(row, right_op);
+		std::string right_value = right_pair.first;
+		std::string right_datatype = right_pair.second;
+
+		if(left_datatype == "DATE" && right_datatype == "INTERVAL_MONTH") {
+			long long left_days = date_to_days(left_value);
+			long long right_days = std::stoll(right_value) * 30;
+			long long result_days = left_days + right_days;
+			std::string result_str = days_to_date(result_days);
+			return std::make_pair(result_str, "DATE");	
+		}
 	} else {
 		husky::LOG_E << "Can not find match operand type";
 		std::string msg = "error";

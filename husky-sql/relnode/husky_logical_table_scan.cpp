@@ -46,12 +46,9 @@ ObjList<RowKV>& HuskyLogicalTableScan::get_output() const {
     }
     record_ch.out();  // flush channel
 
-    unsigned long long count = 0;
-    list_execute(record_objlist, {&record_ch}, {}, [&record_ch, &count](RowKV& record) {
+    list_execute(record_objlist, {&record_ch}, {}, [&record_ch](RowKV& record) {
         record.set_data(record_ch.get(record)[0]);
-        count++;
     });
-    husky::LOG_I << "husky_logical_table_scan output row count: " << count;
 
     table_->clear();
 

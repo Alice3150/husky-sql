@@ -65,7 +65,7 @@ public class HuskyQueryPlanToJson {
         // Create the query planner with the toy schema
         HuskyQueryPlanner queryPlanner = new HuskyQueryPlanner(connection.getRootSchema()
                 .getSubSchema(connection.getSchema()));
-        RelRoot logicalPlan = queryPlanner.getLogicalPlan("select L_ORDERKEY, sum(L_EXTENDEDPRICE*(1-L_DISCOUNT)) as REVENUE, O_ORDERDATE, O_SHIPPRIORITY from Customer, Orders, Lineitem where C_MKTSEGMENT = \'BUILDING\' and C_CUSYKEY = O_CUSTKEY and L_ORDERKEY = O_ORDERKEY and O_ORDERDATE < date \'1995-03-15\' and l_shipdate > date \'1995-03-15\' group by L_ORDERKEY, O_ORDERDATE, O_SHIPPRIORITY order by REVENUE desc, O_ORDERDATE");
+        RelRoot logicalPlan = queryPlanner.getLogicalPlan("select L_ORDERKEY, sum(L_EXTENDEDPRICE*(1-L_DISCOUNT)) as REVENUE, O_ORDERDATE, O_SHIPPRIORITY from Customer, Orders, Lineitem where C_MKTSEGMENT = \'BUILDING\' and C_CUSYKEY = O_CUSTKEY and L_ORDERKEY = O_ORDERKEY and O_ORDERDATE < date \'1995-03-15\' and l_shipdate > date \'1995-03-15\' group by L_ORDERKEY, O_ORDERDATE, O_SHIPPRIORITY order by REVENUE desc, O_ORDERDATE ");
         RelNode physicalPlan = queryPlanner.getPhysicalPlan(logicalPlan);
         
         RelNode physicalPlanTableScan = queryPlanner.getPhysicalPlan(logicalPlan);

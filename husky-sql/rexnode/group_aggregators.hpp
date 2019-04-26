@@ -19,7 +19,6 @@ class GroupAggregators {
         for (auto& aggregate_call : aggregate_calls) {
             aggregators_.push_back(std::move(aggregate_call->get_aggregator()));
         }
-        husky::LOG_I << this->size() << " aggregators are setted";
     }
 
     inline size_t size() const { return aggregators_.size(); }

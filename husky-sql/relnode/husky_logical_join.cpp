@@ -36,8 +36,6 @@ ObjList<RowKV>& HuskyLogicalJoin::get_output() const {
 		left_inner_index = right_inner_index;
 		right_inner_index = temp;
 	}
-	husky::LOG_I << "left_inner_index: " << left_inner_index;
-	husky::LOG_I << "right_join_index: " << right_inner_index;
 
 	int left_column_count = 0;
 	list_execute(left_objlist, {}, {&pre_left_ch}, [&left_inner_index, &left_column_count, &pre_left_ch](RowKV& record) {
@@ -94,12 +92,9 @@ ObjList<RowKV>& HuskyLogicalJoin::get_output() const {
 
 	ObjListStore::drop_objlist(processed_right_objlist.get_id());
 
-	long long count = 0;
-	list_execute(output_objlist, {&join_ch}, {}, [&join_ch, &count](RowKV& record) {
+	list_execute(output_objlist, {&join_ch}, {}, [&join_ch](RowKV& record) {
 		record.set_data(join_ch.get(record)[0]); // push right row data
-		count++;
 	});
-	husky::LOG_I << "husky_logical_join output row count: " << count;
 
 	ObjListStore::drop_objlist(processed_left_objlist.get_id());
     return output_objlist;

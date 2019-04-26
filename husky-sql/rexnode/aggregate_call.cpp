@@ -3,6 +3,7 @@
 #include "husky-sql/rexnode/aggregators/sum_aggregators.hpp"
 #include "husky-sql/rexnode/aggregators/count_aggregators.hpp"
 #include "husky-sql/rexnode/aggregators/avg_aggregators.hpp"
+#include "husky-sql/rexnode/aggregators/min_aggregators.hpp"
 
 #include "core/engine.hpp"
 
@@ -27,6 +28,12 @@ namespace sql {
 			}
 		} else if(this->get_function_name().find("COUNT") != std::string::npos) {
 			return std::make_unique<CountAggregator>();
+		} else if(this->get_function_name().find("MIN") != std::string::npos) {
+			if(this->get_datatype() == "BOOLEAN") {
+				return std::make_unique<BoolMinAggregator>();
+			}
+			/* TODO - Min aggregators for DECIMAL, FLOAT, INTEGER */
+			/* TODO - Max aggregators */
 		} else {
 			/* TODO - must return something */
 			husky::LOG_E << "Can not find match aggregator type";

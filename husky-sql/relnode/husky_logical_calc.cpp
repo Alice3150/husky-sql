@@ -39,13 +39,10 @@ ObjList<RowKV>& HuskyLogicalCalc::get_output() const {
 		}
 	});
 
-	long long count = 0;
-	list_execute(output_objlist, {&record_ch}, {}, [&record_ch, &count](RowKV& record) {
+	list_execute(output_objlist, {&record_ch}, {}, [&record_ch](RowKV& record) {
 		auto row_data = record_ch.get(record)[0];
 		record.set_data(row_data);
-		count++;
 	});
-	husky::LOG_I << "husky_logical_calc output row count: " << count;
 
 	ObjListStore::drop_objlist(input_objlist.get_id());
 

@@ -35,9 +35,12 @@ ObjList<RowKV>& HuskyLogicalAggregate::get_output() const {
 		auto& row_data = record.get_data();
 
 		/* make group key string*/
-		std::string group_key_str  = row_data[group_index[0]];
-		for(int index = 1; index < group_index.size(); index++) {
-			group_key_str = group_key_str + "_" + row_data[group_index[index]];
+		std::string group_key_str = "HuskyGroup";
+		if(group_index.size() != 0) {
+			group_key_str  = row_data[group_index[0]];
+			for(int index = 1; index < group_index.size(); index++) {
+				group_key_str = group_key_str + "_" + row_data[group_index[index]];
+			}
 		}
 		
 		/* set inc */
@@ -54,21 +57,20 @@ ObjList<RowKV>& HuskyLogicalAggregate::get_output() const {
 		
 	});
 
-	long long count = 0;
-	list_execute(output_objlist, {&group_ch}, {}, [&group_ch, &count](RowKV& record) {
+	list_execute(output_objlist, {&group_ch}, {}, [&group_ch,&group_index](RowKV& record) {
 		std::string group_key = record.id();
-		std::vector<std::string> groups;
-		boost::split(groups, group_key, boost::is_any_of("_"), boost::token_compress_on);
-
 		std::vector<std::string> aggregation = group_ch.get(record);
 		std::vector<std::string> result;
-		result.insert( result.end(), groups.begin(), groups.end() );
+
+		if(group_index.size() != 0) {
+			std::vector<std::string> groups;
+			boost::split(groups, group_key, boost::is_any_of("_"), boost::token_compress_on);
+
+			result.insert( result.end(), groups.begin(), groups.end() );
+		}
 		result.insert( result.end(), aggregation.begin(), aggregation.end() );
 
-		husky::LOG_I << "Aggregate Row: " << result;
-
 		record.set_data(result);
-		count++;
 	});
 
 	ObjListStore::drop_objlist(input_objlist.get_id());
