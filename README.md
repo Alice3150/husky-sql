@@ -33,10 +33,6 @@ Configuration & Running
 -------------
 For information of configuring and running Husky, please take a look at the [Husky README](https://github.com/husky-team/husky/blob/master/README.md).
 
-##### Run sample query
-```bash
-make ExecuteQuery
-```
 ##### Get husky query plan JSON (calcite/output/plan.json)
 ```bash
 make HuskyQueryPlanToJson
