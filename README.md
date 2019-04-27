@@ -37,20 +37,33 @@ For information of configuring and running Husky, please take a look at the [Hus
 ```bash
 make ExecuteQuery
 ```
-
-##### Get query plans
-```bash
-make QueryPlan
-```
-##### Get husky query plan
-```bash
-make HuskyQueryPlan
-```
-##### Get husky query plan JSON
+##### Get husky query plan JSON (calcite/output/plan.json)
 ```bash
 make HuskyQueryPlanToJson
 ```
 ##### Get query execution 
 ```bash
-make TestExecute
+make ExecuteSimpleQuery
 ```
+##### Conf file
+```bash
+  master_host=w10
+  master_port=56789
+  comm_port=45678
+
+  hdfs_namenode=proj99
+  hdfs_namenode_port=9000
+
+  serve=0
+
+  json_url=hdfs://localhost:9000/husky-sql/input/plan.json
+  output_path=hdfs://proj99:9000/husky-sql/output/
+
+  [worker]
+  info=w1:4
+  info=w2:4
+  info=w3:4
+  info=w4:4
+  info=w5:4
+```
+
